@@ -18,7 +18,7 @@ const OrderPrintView: React.FC<OrderPrintViewProps> = ({ order, storeSettings, o
 
   const handlePrint = () => {
     // Criar uma nova janela com conteúdo específico para impressão térmica
-    const printWindow = window.open('', '_blank', 'width=300,height=600');
+    const printWindow = window.open('', '_blank', 'width=500,height=600');
     if (!printWindow) {
       alert('Por favor, permita pop-ups para imprimir');
       return;
@@ -56,7 +56,7 @@ const OrderPrintView: React.FC<OrderPrintViewProps> = ({ order, storeSettings, o
           
           .center { text-align: center; }
           .bold { font-weight: bold; }
-          .small { font-size: 10px; }
+          .small { font-size: 15px; } 
           .separator { 
             border-bottom: 1px dashed black; 
             margin: 5px 0; 
@@ -85,39 +85,39 @@ const OrderPrintView: React.FC<OrderPrintViewProps> = ({ order, storeSettings, o
       <body>
         <!-- Cabeçalho -->
         <div class="center mb-3 separator">
-          <div class="bold" style="font-size: 16px;">ELITE AÇAÍ</div>
-          <div class="small">Delivery Premium</div>
+          <div class="bold" style="font-size: 18px; font-weight: bold;">ELITE AÇAÍ</div>
+          <div class="bold small">Delivery Premium</div>
           <div class="small">Rua Um, 1614-C</div>
           <div class="small">Residencial 1 - Cágado</div>
-          <div class="small">Tel: (85) 98904-1010</div>
+          <div class="bold small">Tel: (85) 98904-1010</div>
           <div class="small">CNPJ: ${storeSettings?.cnpj || '38.130.139/0001-22'}</div>
         </div>
         
         ${order.payment_method === 'pix' ? `
         <!-- QR Code PIX -->
         <div class="center mb-3 separator">
-          <div class="bold mb-2">QR CODE PIX</div>
+          <div class="bold mb-2" style="font-weight: bold;">QR CODE PIX</div>
           <img src="/WhatsApp Image 2025-07-22 at 14.53.40.jpeg" alt="QR Code PIX" style="width: 60mm; height: 60mm;">
-          <div class="small">Chave PIX: 85989041010</div>
-          <div class="small">Nome: Amanda Suyelen da Costa Pereira</div>
-          <div class="bold">Valor: ${formatPrice(order.total_price)}</div>
+          <div class="bold small">Chave PIX: 85989041010</div>
+          <div class="bold small">Nome: Amanda Suyelen da Costa Pereira</div>
+          <div class="bold" style="font-weight: bold;">Valor: ${formatPrice(order.total_price)}</div>
         </div>
         ` : ''}
         
         <!-- Dados do Pedido -->
         <div class="mb-3 separator">
-          <div class="bold center mb-2">=== PEDIDO DE DELIVERY ===</div>
-          <div class="small">Pedido: #${order.id.slice(-8)}</div>
+          <div class="bold center mb-2" style="font-weight: bold;">=== PEDIDO DE DELIVERY ===</div>
+          <div class="bold small">Pedido: #${order.id.slice(-8)}</div>
           <div class="small">Data: ${new Date(order.created_at).toLocaleDateString('pt-BR')}</div>
           <div class="small">Hora: ${new Date(order.created_at).toLocaleTimeString('pt-BR')}</div>
-          <div class="small">Status: ${getStatusLabel(order.status)}</div>
+          <div class="bold small">Status: ${getStatusLabel(order.status)}</div>
         </div>
         
         <!-- Cliente -->
         <div class="mb-3 separator">
-          <div class="bold mb-1">DADOS DO CLIENTE:</div>
-          <div class="small">Nome: ${order.customer_name}</div>
-          <div class="small">Telefone: ${order.customer_phone}</div>
+          <div class="bold mb-1" style="font-weight: bold;">DADOS DO CLIENTE:</div>
+          <div class="bold small">Nome: ${order.customer_name}</div>
+          <div class="bold small">Telefone: ${order.customer_phone}</div>
           <div class="small">Endereço: ${order.customer_address}</div>
           <div class="small">Bairro: ${order.customer_neighborhood}</div>
           ${order.customer_complement ? `<div class="small">Complemento: ${order.customer_complement}</div>` : ''}
@@ -125,18 +125,18 @@ const OrderPrintView: React.FC<OrderPrintViewProps> = ({ order, storeSettings, o
         
         <!-- Itens -->
         <div class="mb-3 separator">
-          <div class="bold mb-1">ITENS DO PEDIDO:</div>
+          <div class="bold mb-1" style="font-weight: bold;">ITENS DO PEDIDO:</div>
           ${order.items.map((item, index) => `
             <div class="mb-2">
-              <div class="bold">${item.product_name}</div>
+              <div class="bold" style="font-weight: bold;">${item.product_name}</div>
               ${item.selected_size ? `<div class="small">Tamanho: ${item.selected_size}</div>` : ''}
               <div class="flex-between">
                 <span class="small">${item.quantity}x ${formatPrice(item.unit_price)}</span>
-                <span class="small">${formatPrice(item.total_price)}</span>
+                <span class="bold small">${formatPrice(item.total_price)}</span>
               </div>
               ${item.complements && item.complements.length > 0 ? `
                 <div class="ml-2 mt-1">
-                  <div class="small">Complementos:</div>
+                  <div class="bold small">Complementos:</div>
                   ${item.complements.map(comp => `
                     <div class="small ml-2">• ${comp.name}${comp.price > 0 ? ` (+${formatPrice(comp.price)})` : ''}</div>
                   `).join('')}
@@ -189,7 +189,7 @@ const OrderPrintView: React.FC<OrderPrintViewProps> = ({ order, storeSettings, o
           <div>@eliteacai</div>
           <div>⭐⭐⭐⭐⭐ Avalie-nos no Google</div>
           <div style="margin-top: 8px; padding-top: 5px; border-top: 1px solid black;">
-            <div>Elite Açaí - CNPJ: ${storeSettings?.cnpj || '00.000.000/0001-00'}</div>
+            <div>Elite Açaí - CNPJ: ${storeSettings?.cnpj || '38.130.139/0001-22'}</div>
             <div>Impresso: ${new Date().toLocaleString('pt-BR')}</div>
             <div>Este não é um documento fiscal</div>
           </div>
